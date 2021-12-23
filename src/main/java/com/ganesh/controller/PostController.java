@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("api/v1/posts")
 @RequiredArgsConstructor
@@ -17,7 +19,7 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping
-    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postDto){
+    public ResponseEntity<PostDto> createPost(@Valid @RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.newPost(postDto), HttpStatus.CREATED);
     }
 
@@ -32,21 +34,21 @@ public class PostController {
 
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<PostDto> getPostByIdV1(@PathVariable(name="id")long id){
-        return ResponseEntity.ok(postService.getPostById(id));
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostDto> getPostByIdV1(@PathVariable(name="postId")long postId){
+        return ResponseEntity.ok(postService.getPostById(postId));
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable(name="id") long id) {
-        PostDto response = postService.updatePost(postDto, id);
+    @PutMapping("/{postId}")
+    public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable(name="postId") long postId) {
+        PostDto response = postService.updatePost(postDto, postId);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletePost(@PathVariable(name="id") long id){
-        postService.deletePostById(id);
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<String> deletePost(@PathVariable(name="postId") long postId){
+        postService.deletePostById(postId);
         return new ResponseEntity<>("Post deleted successfully.", HttpStatus.OK);
     }
 
