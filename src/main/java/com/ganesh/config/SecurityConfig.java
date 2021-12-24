@@ -47,7 +47,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().ignoringAntMatchers("/h2-console/**")
                 .and().headers().frameOptions().sameOrigin();
         http
-
                 .csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint)
@@ -58,6 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/v1/**").permitAll()
                 .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/v2/api-docs/**").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
                 .antMatchers("/webjars/**").permitAll()
                 .anyRequest()
                 .authenticated();

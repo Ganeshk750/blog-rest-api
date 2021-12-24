@@ -8,6 +8,8 @@ import com.ganesh.model.User;
 import com.ganesh.repository.RoleRepository;
 import com.ganesh.repository.UserRepository;
 import com.ganesh.security.JwtTokenProvider;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
-
+@Api(value="Auth Controller expose siginin and signup REST APIs")
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -35,6 +37,7 @@ public class AuthController {
     private final JwtTokenProvider tokenProvider;
 
 
+    @ApiOperation(value="REST API to Register or Signup user to Blog app")
     @PostMapping("/signin")
     public ResponseEntity<JWTAuthResponse> authenticateUser(@RequestBody LoginDto loginDto){
         Authentication authentication = authenticationManager
@@ -48,6 +51,7 @@ public class AuthController {
     }
 
 
+    @ApiOperation(value="REST API to Signin or Login user to Blog app")
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@RequestBody SignUpDto signUpDto){
 
